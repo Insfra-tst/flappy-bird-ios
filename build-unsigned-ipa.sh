@@ -35,6 +35,23 @@ fi
 /usr/libexec/PlistBuddy \
   -c 'Print :CFBundleExecutable' \
   "$APP_DIR/Info.plist"
+  
+if [[ ! -f "$APP_DIR/Info.plist" ]]; then
+  echo "App bundle was not created: $APP_DIR"
+  exit 1
+fi
+
+/usr/libexec/PlistBuddy \
+  -c 'Delete :CFBundleExecutable' \
+  "$APP_DIR/Info.plist" 2>/dev/null || true
+
+/usr/libexec/PlistBuddy \
+  -c 'Add :CFBundleExecutable string FlappyBird' \
+  "$APP_DIR/Info.plist"
+
+/usr/libexec/PlistBuddy \
+  -c 'Print :CFBundleExecutable' \
+  "$APP_DIR/Info.plist"
 
 mkdir -p "$BUILD_DIR/Payload"
 mv "$APP_DIR" "$BUILD_DIR/Payload/FlappyBird.app"
