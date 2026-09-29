@@ -7,9 +7,9 @@ jobs:
   build:
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build unsigned IPA
-        run: ./build-unsigned-ipa.sh
+        run: zsh ./build-unsigned-ipa.sh
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
