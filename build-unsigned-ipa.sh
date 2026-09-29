@@ -12,6 +12,14 @@ xcodebuild -project "$ROOT/FlappyBird.xcodeproj" -scheme FlappyBird -configurati
   CONFIGURATION_BUILD_DIR="$BUILD_DIR/Products/Applications" \
   CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
 
+  if [[ ! -f "$APP_DIR/Info.plist" ]]; then
+  echo "App bundle was not created"
+  exit 1
+fi
+
+/usr/libexec/PlistBuddy -c 'Delete :CFBundleExecutable' "$APP_DIR/Info.plist" 2>/dev/null || true
+/usr/libexec/PlistBuddy -c 'Add :CFBundleExecutable string FlappyBird' "$APP_DIR/Info.plist"
+
 # Ensure the final bundle advertises the executable that LiveContainer must launch.
 /usr/libexec/PlistBuddy -c 'Delete :CFBundleExecutable' "$APP_DIR/Info.plist" 2>/dev/null || true
 /usr/libexec/PlistBuddy -c 'Add :CFBundleExecutable string FlappyBird' "$APP_DIR/Info.plist"
