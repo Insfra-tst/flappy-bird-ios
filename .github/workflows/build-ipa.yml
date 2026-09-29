@@ -15,6 +15,7 @@ jobs:
         run: |
           APP="build-unsigned/Payload/FlappyBird.app"
           plutil -p "$APP/Info.plist"
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$APP/Info.plist"
           test -f "$APP/FlappyBird"
           file "$APP/FlappyBird"
       - name: Upload IPA
