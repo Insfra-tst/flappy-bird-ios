@@ -10,6 +10,13 @@ jobs:
       - uses: actions/checkout@v5
       - name: Build unsigned IPA
         run: zsh ./build-unsigned-ipa.sh
+
+      - name: Verify app bundle
+        run: |
+          APP="build-unsigned/Payload/FlappyBird.app"
+          plutil -p "$APP/Info.plist"
+          test -f "$APP/FlappyBird"
+          file "$APP/FlappyBird"
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
