@@ -1,0 +1,20 @@
+name: Build IPA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build unsigned IPA
+        run: ./build-unsigned-ipa.sh
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: FlappyBird-IPA
+          path: build-unsigned/FlappyBird-unsigned.ipa
